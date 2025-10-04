@@ -1,0 +1,90 @@
+{% extends "store/base.html" %}
+
+{% load static %}
+ 
+{% block css_style %} <link rel="stylesheet" href="{% static 'store/css/cart.css' %}"></link>{% endblock %}
+
+{% block js_script %} <script src="{% static 'store/js/cart.js' %}"></script> {% endblock %}
+
+{% block title %}Twój koszyk{% endblock %}
+
+{% block content %}
+
+<div class="container my-4">
+  <div class="w-100 bg-white py-4 shadow-sm">
+    <div class="container">
+      <h2 class="text-center mb-0 cart-title">Your cart</h2>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    {% if cart_items %}
+    <div class="table-responsive">
+      <table class="table align-middle bg-white rounded overflow-hidden">
+          <tr>
+              <th class="text-start">Product</th>
+              <th class="text-center">Price</th>
+              <th class="text-center">Quantity</th>
+              <th class="text-center">Size</th>
+              <th class="text-center">Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for item in cart_items %}
+          <tr>
+              <td class="d-flex align-items-center gap-3">
+              <a href="{% url 'product-detail' item.product.id %}" class="d-flex align-items-center gap-3 text-decoration-none text-dark">
+                  <img src="{{ item.product.thumb.image.url }}" alt="{{ item.product.name }}" width="60" height="60" class="cart-product-thumb rounded shadow-sm">
+                  <span>{{ item.product.name }}</span>
+              </a>
+              </td>
+              <td class="text-center text-success fw-semibold">{{ item.product.price }} euro</td>
+              <td class="text-center">{{ item.quantity }}</td>
+              <td class="text-center">{{ item.size|default:"–" }}</td>
+              <td class="text-center">
+              <form method="post" action="{% url 'remove-from-cart' %}" class="d-inline">
+                  {% csrf_token %}
+                  <input type="hidden" name="product_id" value="{{ item.product.id }}">
+                  <input type="hidden" name="size" value="{{ item.size }}">
+                  <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+              </form>
+              </td>
+          </tr>
+          {% endfor %}
+          </tbody>
+      </table>
+      </div>
+      <div class="row mt-4 align-items-center">
+      <div class="col-md-6 d-flex align-items-center">
+          <h6 class="fw-normal mb-4">
+          <i class="bi bi-truck"></i>  Estimated delivery time - <span>7 days</span>
+          <br>
+          <br>
+          <i class="bi bi-arrow-return-left"></i>  Free returns for 31 days from delivery date. 
+          </h6>
+      </div>
+      <div class="col-md-6 text-end">
+          <h5 class="fw-normal mb-0">
+          Łącznie: <span class="fw-bold">{{ total_price }} euro</span>
+          </h5>
+          <button id="checkout-button" class="btn btn-dark rounded-pill mt-2 px-4 py-2">Go to order</a>
+      </div>
+      </div>
+    {% else %}
+    <div class="text-center text-muted my-5">
+      <p class="fs-5">Your cart is empty</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="container-fluid px-5 my-5">
+  <hr>
+  {% include "store/includes/recommended_products.html" %}
+</div>
+
+
+
+{% endblock %}
+
+

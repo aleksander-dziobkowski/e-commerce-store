@@ -1,0 +1,169 @@
+html, body {
+        margin: 0;
+        padding: 0;
+        scroll-behavior: smooth;
+        background-color: #f5f3f1;
+        overflow-x: hidden;
+    }
+
+    .section {
+        position: relative;
+        height: 90vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        flex-direction: column;
+        text-align: center;
+        border-bottom: 15px solid white; /* biały pasek między sekcjami */
+        margin-left: 0;
+        margin-right: 0;
+        max-width: 100%;
+    }
+    .section:last-of-type {
+        border-bottom: none;
+    }
+
+    .section:last-of-type::after {
+        display: none;
+    }
+    
+    .section-1-heading {
+        position: absolute;
+        top: 17%;
+        left: 50.5%;
+        transform: translateX(-50%);
+        text-align: center;
+        z-index: 4; /* wyżej niż torba i słońce */
+        color: #333;
+    }
+
+    .section-1-heading h1 {
+        font-size: 4rem;
+        margin-bottom: 0.5rem;
+        font-weight: 350;
+    }
+    .section-1-btn {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.6); /* przezroczysty czarny */
+        color: white;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 1rem;
+        z-index: 5;
+        transition: background-color 0.5s ease;
+    }
+
+    .section-1-btn:hover {
+        background-color: rgba(0, 0, 0, 2);
+        text-decoration: none;
+        color: white;
+    }
+
+
+    .section::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 150px; /* grubość cienia */
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, white 100%);
+        z-index: 3;
+    }
+
+    .section img {
+        position: absolute;
+        bottom: 0vw;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 45%;
+        height: auto;
+        max-height: 90vh;
+        z-index: 2;
+    }
+
+
+    .circle-bg {
+        max-width: 100vw;
+        position: absolute;
+        bottom: -7rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80vw;
+        height: 47vw;
+        background-color: white;
+        border-top-left-radius: 50% 100%;
+        border-top-right-radius: 50% 100%;
+        z-index: 1;
+    }
+
+    .section h2 {
+        font-size: 2.5rem;
+        color: #333;
+        margin: 0;
+    }
+
+    .recommended-section {
+    position: relative;
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-direction: column;
+    text-align: center;
+    border-bottom: 15px solid white; /* biały pasek między sekcjami */
+    margin-left: 0;
+    margin-right: 0;
+    background-color: #f1f3f5; /* tło dopasowane do strony */
+    z-index: 1;
+    }
+
+    .recommended-section::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 120px;
+    background: linear-gradient(to bottom, rgba(241, 243, 245, 0), #ffffff); /* od przezroczystego do tła */
+    z-index: 2;
+    pointer-events: none;
+    }
+
+
+/* .section-3-btn {
+    position: absolute;
+    top: 25rem;
+    right: 80rem;
+    left: auto;
+    transform: none;
+} */
+
+    .section-3-btn {
+        position: relative;
+        bottom: 2rem;
+        right: 90%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.6); /* przezroczysty czarny */
+        color: white;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 50px;
+        text-decoration: none;
+        font-size: 2rem;
+        z-index: 5;
+        transition: background-color 0.5s ease;
+    }
+
+    .section-3-btn:hover {
+        background-color: rgba(0, 0, 0, 2);
+        text-decoration: none;
+        color: white;
+    }

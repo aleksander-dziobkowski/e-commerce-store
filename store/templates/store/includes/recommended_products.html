@@ -1,0 +1,23 @@
+{% load static %}
+
+<h1 class="text-center mb-4 recommended-title">Recommended for you</h1>
+
+{% if recommended_products %}
+<div class="d-flex justify-content-center gap-4 flex-wrap">
+{% for product in recommended_products %}
+<div style="width: 12%; min-width: 150px;">
+    <a href="{% url 'product-detail' product.id %}" class="text-decoration-none text-dark">
+    <div class="card h-100 border-1 shadow-sm rounded-4 overflow-hidden">
+    <img src="{{ product.thumb.image.url }}" class="card-img-top recommended-img" alt="{{ product.name }}">
+    <div class="card-body text-center">
+        <h5 class="card-title mb-2 recommended-card-title">{{ product.name }}</h5>
+        <p class="text-success fw-bold mb-1">{{ product.price }} euro</p>
+    </div>
+    </div>
+    </a>
+</div>
+{% endfor %}
+</div>
+{% else %}
+<p class="text-center text-muted">No recommended products.</p>
+{% endif %}

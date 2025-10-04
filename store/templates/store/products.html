@@ -1,0 +1,99 @@
+{% extends "store/base.html" %}
+
+{% load static %}
+
+{% block css_style %} <link rel="stylesheet" href="{% static 'store/css/products.css' %}"></link> {% endblock %}
+
+{% block js_script %} <script src="{% static 'store/js/products.js' %}"></script> {% endblock %}
+
+{% block title %}Products{% endblock %}
+
+{% block content %}
+
+<div class="container my-4">
+  <form method="get" class="mb-4 d-flex align-items-center gap-3 flex-wrap">
+
+  {% for key, value in request.GET.items %}
+      {% if key != 'min_price' and key != 'max_price' and key != 'sort' %}
+          <input type="hidden" name="{{ key }}" value="{{ value }}">
+      {% endif %}
+  {% endfor %}
+
+  <div class="position-relative">
+    <button type="button" class="btn btn-outline-dark px-4 py-2" id="priceFilterToggle">
+      Price range
+    </button>
+    <div id="priceFilterBox" class="position-absolute bg-white border rounded shadow-sm p-3 mt-2"
+        style="display: none; min-width: 260px; z-index: 1000;">
+      <label for="priceRangeMin" class="form-label mb-1">From: <span id="minPriceVal">{{ request.GET.min_price|default:0 }}</span> euro</label>
+      <input type="range" class="form-range" id="priceRangeMin" name="min_price" min="0" max="1000" step="10" value="{{ request.GET.min_price|default:0 }}">
+      <label for="priceRangeMax" class="form-label mt-2 mb-1">To: <span id="maxPriceVal">{{ request.GET.max_price|default:1000 }}</span> euro</label>
+      <input type="range" class="form-range" id="priceRangeMax" name="max_price" min="0" max="1000" step="10" value="{{ request.GET.max_price|default:1000 }}">
+
+      <div class="text-end mt-2">
+        <button type="submit" class="btn btn-sm btn-dark rounded-pill px-3">Filter</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="position-relative">
+    <button type="button" class="btn btn-outline-dark px-4 py-2" id="sortToggle">
+      Sorting
+    </button>
+    <div id="sortBox" class="position-absolute bg-white border rounded shadow-sm p-3 mt-2"
+        style="display: none; min-width: 200px; z-index: 1000;">
+      <select name="sort" class="form-select mb-3 rounded-pill">
+        <option value="">Popular</option>
+        <option value="asc" {% if sort == 'asc' %}selected{% endif %}>Lowest price</option>
+        <option value="desc" {% if sort == 'desc' %}selected{% endif %}>Highest price</option>
+      </select>
+
+      <div class="text-end">
+        <button type="submit" class="btn btn-sm btn-dark rounded-pill px-3">Filter</button>
+      </div>
+    </div>
+  </div>
+
+</form>
+
+
+<div class="row">
+    {% if products %}
+      {% for product in products %}
+        {% include "store/includes/product.html" %}
+      {% endfor %}
+      <div class="pagination">
+          <span class="step-links">
+              {% if page_obj.has_previous %}
+                  <a class="page-btn" href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}">&larr;</a>
+              {% else %}
+                  <span class="page-btn disabled">&larr;</span>
+              {% endif %}
+
+              <span class="page-current">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+
+              {% if page_obj.has_next %}
+                  <a class="page-btn" href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.next_page_number }}">&rarr;</a>
+              {% else %}
+                  <span class="page-btn disabled">&rarr;</span>
+              {% endif %}
+          </span>
+      </div>
+
+    {% else %}
+      <div class="col-12 text-center text-muted">
+        <p>No products to display.</p>
+      </div>
+    {% endif %}
+  </div>
+  
+</div>
+
+<div class="container-fluid px-5 my-5">
+  <hr>
+  {% include "store/includes/recommended_products.html" %}
+</div>
+{% endblock %}
+
+
+

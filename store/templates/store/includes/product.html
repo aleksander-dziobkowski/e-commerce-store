@@ -1,0 +1,13 @@
+{% load static %}
+
+<div class="col-md-3 mb-4">
+    <a href="{% url 'product-detail' product.id %}" class="text-decoration-none text-dark">
+    <div class="card h-100 shadow-sm">
+        <img src="{{ product.thumb.image.url }}" class="card-img-top" alt="{{ product.name }}">
+        <div class="card-body text-center">
+        <h5 class="card-title">{{ product.name }}</h5>
+        <p class="card-text text-success fw-bold">{{ product.price }} euro</p>
+        </div>
+    </div>
+    </a> 
+</div>

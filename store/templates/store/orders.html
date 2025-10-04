@@ -1,0 +1,69 @@
+{% extends "store/base.html" %}
+{% block title %}Twoje konto{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+  <div class="row">
+    <div class="col-md-3 mb-4">
+      <h4 class="mb-4">Your account</h4>
+      <div class="list-group">
+        <a href="{% url 'profile' %}" class="list-group-item list-group-item-action">Personal data</a>
+        <a href="{% url 'orders' %}" class="list-group-item list-group-item-action bg-dark text-white">Orders and returns</a>
+      </div>
+    </div>
+<div class="col-md-9">
+    {% if orders %}
+        {% for order in orders %}
+            <div class="card mb-4 shadow-sm">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    <span>Order number: {{ order.id }}</span>
+                    <small>Date: {{ order.created_at|date:"d.m.Y H:i" }}</small>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Product</th>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Size</th>
+                                <th>Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order_element in order.order_items.all %}
+                                <tr>
+                                    <td>
+                                        <img src="{{ order_element.product.thumb.image.url }}" 
+                                             alt="{{ order_element.product.name }}" 
+                                             width="60" height="60" class="rounded shadow-sm"
+                                             style="object-fit: cover;">
+                                    </td>
+                                    <td>{{ order_element.product.name }}</td>
+                                    <td>{{ order_element.quantity }}</td>
+                                    <td>{{ order_element.size|default:"–" }}</td>
+                                    <td class="text-success fw-semibold">{{ order_element.price }} euro</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <strong>
+                        Status: 
+                        <span class="badge bg-{{ order.get_status_color }}">
+                            {{ order.get_status_display }}
+                        </span>
+                    </strong>
+                    <strong>Summary price: {{ order.amount }} euro</strong>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="text-muted">No orders</p>
+    {% endif %}
+</div>
+
+  </div>
+</div>
+{% endblock %}

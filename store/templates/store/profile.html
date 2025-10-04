@@ -1,0 +1,40 @@
+{% extends "store/base.html" %}
+{% block title %}Your account{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+  <div class="row">
+    <div class="col-md-3 mb-4">
+      <h4 class="mb-4">Your account</h4>
+      <div class="list-group">
+        <a href="{% url 'profile' %}" class="list-group-item list-group-item-action bg-dark text-white">Personal data</a>
+        <a href="{% url 'orders' %}" class="list-group-item list-group-item-action ">Orders and returns</a>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="bg-white rounded shadow-sm p-4">
+        <form method="post">
+          {% csrf_token %}
+          {{ profile_form.as_p }}
+          <button class="btn btn-sm btn-dark rounded-pill px-3" type="submit">Save changes</button>
+      </form>
+        <hr>
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div class="ms-auto d-flex gap-2">
+            <a href="{% url 'account_reset_password' %}" class="btn btn-sm btn-dark rounded-pill px-3">
+                Change password
+            </a>
+            <form method="post" action="{% url 'account_logout' %}" >
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-dark rounded-pill px-3 text-white">Log out</button>
+            </form>
+            <a href="#" class="btn btn-sm btn-danger rounded-pill px-3">
+            Delete account
+            </a>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

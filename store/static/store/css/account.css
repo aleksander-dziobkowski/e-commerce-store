@@ -1,0 +1,15 @@
+input.form-control {
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    height: 38px;
+}
+button.btn-dark {
+    background-color: #2b2b2b;
+    border: none;
+}
+button.btn-dark:hover {
+    background-color: #1a1a1a;
+}
+.hover-underline:hover {
+    text-decoration: underline;
+}

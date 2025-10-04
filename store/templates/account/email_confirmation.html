@@ -1,0 +1,15 @@
+{% extends "store/base.html" %}
+{% block title %}Email address confirmed{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="bg-white p-4 rounded-3 shadow text-center" style="max-width: 400px; width: 100%;">
+        <h4 class="mb-3">Your email address has been confirmed</h4>
+        <p>Thank you for confirming your email address. You can sign in now.</p>
+
+        <a href="{% url 'account_login' %}" class="btn btn-dark mt-3 rounded-pill px-4 py-2">
+            Go to sign in
+        </a>
+    </div>
+</div>
+{% endblock %}

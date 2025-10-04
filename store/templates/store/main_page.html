@@ -1,0 +1,55 @@
+{% extends "store/base.html" %}
+
+{% load static %}
+
+{% block css_style %} <link rel="stylesheet" href="{% static 'store/css/main_page.css' %}"></link> {% endblock %}
+
+{% block title %}Main{% endblock %}
+
+{% block content %}
+
+<div class="section">
+    <div class="section-1-heading">
+        <h1>E-Commerce<br>Store</h1>
+    </div>
+    <div class="circle-bg"></div>
+    <a href="{% url 'products' %}" class="section-1-btn">
+        Check our products
+    </a> 
+    <img src="{% static 'store/images/bag-white-background.jpg' %}" alt="Torba">
+</div>
+
+<div class="recommended-section position-relative py-5">
+    <h1 class="text-center mb-4" style="font-weight: 400;">Recommended for you</h1>
+    <div class="container">
+      {% if recommended_products %}
+      <div class="row justify-content-center">
+        {% for product in recommended_products %}
+        <div class="col custom-col-5 mb-4">
+          <a href="{% url 'product-detail' product.id %}" class="text-decoration-none text-dark">
+            <div class="card h-100 border-1 shadow-sm rounded-4 overflow-hidden">
+              <img src="{{ product.thumb.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 320px; object-fit: cover;">
+              <div class="card-body text-center">
+                <h5 class="card-title mb-2" style="font-weight: 500;">{{ product.name }}</h5>
+                <p class="text-success fw-bold mb-1">{{ product.price }} euro</p>
+                <small class="text-muted">Likes: {{ product.liked_by.count }}</small>
+              </div>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p class="text-center text-muted">No recommended products.</p>
+      {% endif %}
+    </div>
+</div>
+
+<div class="section" style="width:100%; height:100vh; background-image:url('{% static 'store/images/section3.jpg' %}'); background-size:cover; background-position:center; background-repeat:no-repeat;">
+    <div class="top-area">
+        <a href="{% url 'swagger-ui' %}" class="section-3-btn">See product reviews</a>
+    </div>
+</div>
+
+
+{% endblock %}

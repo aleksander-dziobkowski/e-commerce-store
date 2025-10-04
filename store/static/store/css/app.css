@@ -1,0 +1,81 @@
+body {
+    background-color: #f1f3f5;
+    font-family: "Montserrat", sans-serif;
+}
+
+/* Navbar autohide */
+#navbar {
+    transition: top 0.3s ease-in-out;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+#navbar.hidden {
+    top: -100px;
+}
+
+
+
+.megamenu {
+    position: fixed;
+    top: 45px; 
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 1000;
+    background-color: white;
+    padding: 1rem 2rem;
+}
+.megamenu > .d-flex {
+    display: flex;
+    justify-content: center; 
+    gap: 2rem;             
+    overflow-x: auto;        
+    white-space: nowrap;   
+    padding: 0 1rem;         
+}
+
+.nav-item.dropdown:hover .megamenu,
+.nav-item.dropdown .megamenu:hover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+
+
+.megamenu.profile-menu {
+    min-width: 180px;
+    right: 0;
+    left: auto;
+    position: absolute;
+    top: 100%;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+}
+
+.megamenu.cart-preview {
+position: absolute;
+right: 0;
+left: auto;
+top: 95%;
+opacity: 0;
+visibility: hidden;
+transform: translateY(-0px);
+transition: opacity 0.5s ease, transform 0.5s ease;
+z-index: 1000;
+background-color: white;
+}
+
+.nav-item.dropdown:hover .cart-preview,
+.cart-preview:hover {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}

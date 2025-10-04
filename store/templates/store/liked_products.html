@@ -1,0 +1,41 @@
+{% extends "store/base.html" %}
+
+{% block title %}Ulubione{% endblock %}
+
+{% block content %}
+
+<div class="container my-4">
+  <div class="w-100 bg-white py-4 shadow-sm">
+    <div class="container">
+      <h2 class="text-center mb-0" style="font-weight: 400;">
+        Liked Products
+        {% if products %}
+          ({{ products|length }})
+        {% else %}
+          (0)
+        {% endif %}
+      </h2>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <div class="row">
+      {% if products %}
+        {% for product in products %}
+          {% include "store/includes/product.html" %}
+        {% endfor %}
+      {% else %}
+        <div class="col-12 text-center text-muted">
+          <p>No products to display.</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid px-5 my-5">
+  <hr>
+  {% include "store/includes/recommended_products.html" %}
+</div>
+{% endblock %}
+

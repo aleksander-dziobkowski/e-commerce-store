@@ -1,0 +1,25 @@
+/* Tytuł strony koszyka */
+.cart-title {
+  font-weight: 400;
+}
+
+/* Miniaturka produktu w koszyku */
+.cart-product-thumb {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+}
+
+/* Sekcja polecanych produktów */
+.recommended-title {
+  font-weight: 300;
+}
+
+.recommended-img {
+  height: 250px;
+  object-fit: cover;
+}
+
+.recommended-card-title {
+  font-weight: 500;
+}

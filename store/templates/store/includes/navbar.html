@@ -1,0 +1,114 @@
+{% load static %}
+
+<nav id="navbar" class="navbar navbar-expand-lg bg-white shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand ps-0" href="{% url 'store' %}">
+                <img src="{% static 'store/images/logo.svg' %}" alt="Logo" style="height:30px;">
+            </a>
+            <div class="collapse navbar-collapse justify-content-center" id="mainNav">
+                <ul class="navbar-nav">
+                    {% for main_category in main_categories %}
+                        {% if main_category.categories.count > 0 %}
+                            <li class="nav-item dropdown position-relative mx-3">
+                                <a class="nav-link" href="{% url 'products' %}?main_category_id={{ main_category.id }}">
+                                    {{ main_category.name }}
+                                </a>
+                                <div class="megamenu mt-0 py-3 bg-white">
+                                    <div class="d-flex flex-nowrap gap-3 overflow-auto px-3">
+                                        {% for category in main_category.categories.all %}
+                                     <a class="nav-link px-2 d-inline-block text-decoration-none" href="{% url 'products' %}?category_id={{ category.id }}">
+                                        {{ category.name }}
+                                    </a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li class="nav-item mx-3">
+                                <a class="nav-link" href="{% url 'products' %}?main_category_id={{ main_category.id }}">
+                                    {{ main_category.name }}
+                                </a> 
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    <li class="nav-item mx-4">
+                    <a class="nav-link text-danger" href="{% url 'swagger-ui' %}">Reviews API</a>
+                    </li>
+                    <li class="nav-item mx-4">
+                    <a class="nav-link text-danger" href="{% url 'main_page' %}">CV</a>
+                    </li>
+                    <li class="nav-item mx-4">
+                    <a class="nav-link text-danger" href="{% url 'main_page' %}">GitHub Repo</a>
+                    </li>
+
+
+                </ul>
+                <ul class="navbar-nav d-flex align-items-center gap-2 position-absolute end-0 top-50 translate-middle-y me-3">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'liked-products' %}">
+                            <i class="bi bi-heart" style="font-size: 1.5rem;position: relative; top: 2px;"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown position-static">
+                        <a class="nav-link" href="{% url 'cart' %}">
+                            <i class="bi bi-bag" style="font-size: 1.5rem;"></i>
+                            {% if cart_items_preview %}
+                                <span class="position-absolute top-30 start-55 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
+                                    {{ cart_items_count }}
+                                </span>
+                            {% endif %}
+                        </a>
+
+                        <div class="megamenu cart-preview w-auto mt-0 py-2 px-3 bg-white border rounded shadow-sm" style="min-width: 280px;">
+                            {% if cart_items_preview %}
+                            <h6 class="text-center">Twój koszyk</h6>
+                            <hr class="my-2">
+                            <ul class="list-unstyled mb-0">
+                                {% for item in cart_items_preview %}
+                                <li class="d-flex align-items-center mb-2">
+                                    <img src="{{ item.product.thumb.image.url }}" alt="{{ item.product.name }}" style="width:110px; height: 110px; object-fit: cover;" class="me-2 rounded">
+                                    <div>
+                                        <small>{{ item.product.name }}</small><br>
+                                        <small class="text-muted">Quantity: {{ item.quantity }}</small><br>
+                                        <small class="text-muted">Size: {{ item.size }}</small>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <div class="text-center mt-2">
+                                <a href="{% url 'cart' %}" class="btn btn-sm btn-outline-dark rounded-pill">Go to cart</a>
+                            </div>
+                            {% else %}
+                            <p class="text-center mb-0">The cart is empty</p>
+                            {% endif %}
+                        </div>
+
+                    </li>
+
+                    <li class="nav-item dropdown position-static">
+                        <a class="nav-link" href="{% url 'profile' %}">  
+                            <i class="bi bi-person" style="font-size: 1.9rem;"></i>
+                        </a>  
+                        {% if request.user.is_authenticated %}
+                        <div class="megamenu profile-menu w-auto mt-0 py-2 px-3 bg-white text-center">
+                            <p class="mb-1">{{ request.user.email }}</p>
+                            <a href="{% url 'profile' %}" class="dropdown-item text-dark">Your Account</a>
+                            <form method="post" action="{% url 'account_logout' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item text-dark bg-transparent border-0 p-0">Logout</button>
+                            </form>
+                        </div>
+                        {% else %}
+                        <div class="megamenu profile-menu w-auto mt-0 py-2 px-3 bg-white text-center">
+                            <form action="{% url 'account_login' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item text-dark bg-transparent border-0 p-0">Sign in</button>
+                            </form>
+                        </div>
+                        {% endif %} 
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
